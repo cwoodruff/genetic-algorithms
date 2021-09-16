@@ -4,7 +4,7 @@ namespace genetic_algorithms.app
 {
     class Program
     {
-        public static double theActualFunction(double[] values)
+        public static double theFitnessFunction(double[] values)
         {
             if (values.GetLength(0) != 2)
                 throw new ArgumentOutOfRangeException($"should only have 2 args");
@@ -21,7 +21,7 @@ namespace genetic_algorithms.app
         {
             GA ga = new GA(0.8,0.05,100,2000,2);
 		
-            ga.FitnessFunction = theActualFunction;
+            GA.FitnessFunction = theFitnessFunction;
             ga.Elitism = true;
             ga.Go();
 

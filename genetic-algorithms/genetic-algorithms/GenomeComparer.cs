@@ -1,21 +1,19 @@
+#nullable enable
+
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace genetic_algorithms
 {
-    public sealed class GenomeComparer : IComparer
+    public sealed class GenomeComparer : IComparer<Genome>
     {
-        public int Compare(object x, object y)
+        public int Compare(Genome? x, Genome? y)
         {
-            if (!(x is Genome) || !(y is Genome))
-                throw new ArgumentException("Not of type Genome");
-
-            if (((Genome)x).Fitness > ((Genome)y).Fitness)
+            if (x != null && y != null && x.Fitness > y.Fitness)
                 return 1;
-            else if (((Genome)x).Fitness == ((Genome)y).Fitness)
+            if (x != null && y != null && Math.Abs(x.Fitness - y.Fitness) == 0)
                 return 0;
-            else
-                return -1;
+            return -1;
         }
     }
 }

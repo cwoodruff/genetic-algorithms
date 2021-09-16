@@ -1,6 +1,7 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace genetic_algorithms
 {
@@ -11,68 +12,67 @@ namespace genetic_algorithms
         public GA()
         {
             InitialValues();
-            m_mutationRate = 0.05;
-            m_crossoverRate = 0.80;
-            m_populationSize = 100;
-            m_generationSize = 2000;
-            m_strFitness = "";
+            MutationRate = 0.05;
+            CrossoverRate = 0.80;
+            PopulationSize = 100;
+            Generations = 2000;
+            FitnessFile = "";
         }
 
         public GA(double crossoverRate, double mutationRate, int populationSize, int generationSize, int genomeSize)
         {
             InitialValues();
-            m_mutationRate = mutationRate;
-            m_crossoverRate = crossoverRate;
-            m_populationSize = populationSize;
-            m_generationSize = generationSize;
-            m_genomeSize = genomeSize;
-            m_strFitness = "";
+            MutationRate = mutationRate;
+            CrossoverRate = crossoverRate;
+            PopulationSize = populationSize;
+            Generations = generationSize;
+            GenomeSize = genomeSize;
+            FitnessFile = "";
         }
 
         public GA(int genomeSize)
         {
             InitialValues();
-            m_genomeSize = genomeSize;
+            GenomeSize = genomeSize;
         }
 
 
         private void InitialValues()
         {
-            m_elitism = false;
+            Elitism = false;
         }
 
         public void Go()
         {
-            if (getFitness == null)
+            if (FitnessFunction == null)
                 throw new ArgumentNullException($"Need to supply fitness function");
-            if (m_genomeSize == 0)
+            if (GenomeSize == 0)
                 throw new IndexOutOfRangeException("Genome size not set");
 
             //  Create the fitness table.
-            m_fitnessTable = new ArrayList();
-            m_thisGeneration = new ArrayList(m_generationSize);
-            m_nextGeneration = new ArrayList(m_generationSize);
-            Genome.MutationRate = m_mutationRate;
-
-
+            m_fitnessTable = new List<double>();
+            m_thisGeneration = new List<Genome>(Generations);
+            m_nextGeneration = new List<Genome>(Generations);
+            Genome.MutationRate = MutationRate;
+            
             CreateGenomes();
             RankPopulation();
 
             StreamWriter outputFitness = null;
             var write = false;
-            if (m_strFitness != "")
+            if (FitnessFile != "")
             {
                 write = true;
-                outputFitness = new StreamWriter(m_strFitness);
+                outputFitness = new StreamWriter(FitnessFile);
             }
 
-            for (var i = 0; i < m_generationSize; i++)
+            for (var i = 0; i < Generations; i++)
             {
                 CreateNextGeneration();
                 RankPopulation();
                 if (write)
                 {
-                    double d = (m_thisGeneration[m_populationSize - 1] as Genome).Fitness;
+                    double d = m_thisGeneration[PopulationSize - 1].Fitness;
                     outputFitness.WriteLine("{0},{1}", i, d);
                 }
             }
@@ -86,18 +86,18 @@ namespace genetic_algorithms
             double randomFitness = m_random.NextDouble() * m_totalFitness;
             var idx = -1;
             var first = 0;
-            var last = m_populationSize - 1;
+            var last = PopulationSize - 1;
             var mid = last / 2;
 
             //  ArrayList's BinarySearch is for exact values only
             //  so do this by hand.
             while (idx == -1 && first <= last)
             {
-                if (randomFitness < (double)m_fitnessTable[mid])
+                if (randomFitness < m_fitnessTable[mid])
                 {
                     last = mid;
                 }
-                else if (randomFitness > (double)m_fitnessTable[mid])
+                else if (randomFitness > m_fitnessTable[mid])
                 {
                     first = mid;
                 }
@@ -112,11 +112,10 @@ namespace genetic_algorithms
         private void RankPopulation()
         {
             m_totalFitness = 0;
-            for (int i = 0; i < m_populationSize; i++)
+            foreach (var genome in m_thisGeneration)
             {
-                Genome g = ((Genome)m_thisGeneration[i]);
-                g.Fitness = FitnessFunction(g.Genes());
-                m_totalFitness += g.Fitness;
+                genome.Fitness = FitnessFunction(genome.Genes());
+                m_totalFitness += genome.Fitness;
             }
 
             m_thisGeneration.Sort(new GenomeComparer());
@@ -124,38 +123,35 @@ namespace genetic_algorithms
             //  now sorted in order of fitness.
             double fitness = 0.0;
             m_fitnessTable.Clear();
-            for (int i = 0; i < m_populationSize; i++)
+            
+            foreach (var genome in m_thisGeneration)
             {
-                fitness += ((Genome)m_thisGeneration[i]).Fitness;
+                fitness += genome.Fitness;
                 m_fitnessTable.Add(fitness);
             }
         }
 
         private void CreateGenomes()
         {
-            for (int i = 0; i < m_populationSize; i++)
-            {
-                Genome g = new Genome(m_genomeSize);
-                m_thisGeneration.Add(g);
-            }
+            m_thisGeneration = Enumerable.Repeat(new Genome(GenomeSize), PopulationSize).ToList();
         }
 
         private void CreateNextGeneration()
         {
             m_nextGeneration.Clear();
             Genome g = null;
-            if (m_elitism)
-                g = (Genome)m_thisGeneration[m_populationSize - 1];
+            if (Elitism)
+                g = m_thisGeneration[PopulationSize - 1];
 
-            for (int i = 0; i < m_populationSize; i += 2)
+            for (var i = 0; i < PopulationSize; i += 2)
             {
                 int pidx1 = RouletteSelection();
                 int pidx2 = RouletteSelection();
                 Genome parent1, parent2, child1, child2;
-                parent1 = ((Genome)m_thisGeneration[pidx1]);
-                parent2 = ((Genome)m_thisGeneration[pidx2]);
+                parent1 = m_thisGeneration[pidx1];
+                parent2 = m_thisGeneration[pidx2];
 
-                if (m_random.NextDouble() < m_crossoverRate)
+                if (m_random.NextDouble() < CrossoverRate)
                 {
                     parent1.Crossover(ref parent2, out child1, out child2);
                 }
@@ -172,84 +168,41 @@ namespace genetic_algorithms
                 m_nextGeneration.Add(child2);
             }
 
-            if (m_elitism && g != null)
+            if (Elitism && g != null)
                 m_nextGeneration[0] = g;
 
             m_thisGeneration.Clear();
-            for (int i = 0; i < m_populationSize; i++)
-                m_thisGeneration.Add(m_nextGeneration[i]);
+            foreach (var genome in m_nextGeneration) m_thisGeneration.Add(genome);
         }
 
-
-        private double m_mutationRate;
-        private double m_crossoverRate;
-        private int m_populationSize;
-        private int m_generationSize;
-        private int m_genomeSize;
         private double m_totalFitness;
-        private string m_strFitness;
-        private bool m_elitism;
 
-        private ArrayList m_thisGeneration;
-        private ArrayList m_nextGeneration;
-        private ArrayList m_fitnessTable;
+        private List<Genome> m_thisGeneration;
+        private List<Genome> m_nextGeneration;
+        private List<double> m_fitnessTable;
 
         static Random m_random = new Random();
 
-        static private GAFunction getFitness;
-
-        public GAFunction FitnessFunction
-        {
-            get => getFitness;
-            set => getFitness = value;
-        }
+        public static GAFunction FitnessFunction { get; set; }
 
         //  Properties
-        public int PopulationSize
-        {
-            get => m_populationSize;
-            set => m_populationSize = value;
-        }
+        public int PopulationSize { get; set; }
 
-        public int Generations
-        {
-            get => m_generationSize;
-            set => m_generationSize = value;
-        }
+        public int Generations { get; set; }
 
-        public int GenomeSize
-        {
-            get => m_genomeSize;
-            set => m_genomeSize = value;
-        }
+        public int GenomeSize { get; set; }
 
-        public double CrossoverRate
-        {
-            get => m_crossoverRate;
-            set => m_crossoverRate = value;
-        }
+        public double CrossoverRate { get; set; }
 
-        public double MutationRate
-        {
-            get => m_mutationRate;
-            set => m_mutationRate = value;
-        }
+        public double MutationRate { get; set; }
 
-        public string FitnessFile
-        {
-            get => m_strFitness;
-            set => m_strFitness = value;
-        }
+        public string FitnessFile { get; set; }
 
-        public bool Elitism
-        {
-            get => m_elitism;
-            set => m_elitism = value;
-        }
+        public bool Elitism { get; set; }
 
         public void GetBest(out double[] values, out double fitness)
         {
-            Genome g = ((Genome)m_thisGeneration[m_populationSize - 1]);
+            Genome g = m_thisGeneration[PopulationSize - 1];
             values = new double[g.Length];
             g.GetValues(ref values);
             fitness = g.Fitness;
@@ -260,14 +213,15 @@ namespace genetic_algorithms
             GetNthGenome(0, out values, out fitness);
         }
 
-        public void GetNthGenome(int n, out double[] values, out double fitness)
+        public Genome GetNthGenome(int n, out double[] values, out double fitness)
         {
-            if (n < 0 || n > m_populationSize - 1)
+            if (n < 0 || n > PopulationSize - 1)
                 throw new ArgumentOutOfRangeException($"n too large, or too small");
-            Genome g = ((Genome)m_thisGeneration[n]);
+            Genome g = m_thisGeneration[n];
             values = new double[g.Length];
             g.GetValues(ref values);
             fitness = g.Fitness;
+            return g;
         }
     }
 }
