@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "genetic-algorithms", "genetic-algorithms\genetic-algorithms.csproj", "{E59978E1-10C4-431B-9AA7-F7959634A348}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "genetic-algorithms.tests", "genetic-algorithms.tests\genetic-algorithms.tests.csproj", "{FDFD52F7-FB7E-4AB8-AE53-AB2930627536}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "genetic-algorithms.app", "genetic-algorithms.app\genetic-algorithms.app.csproj", "{44D6C9A7-E587-4A7E-9937-1799935F2C85}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E59978E1-10C4-431B-9AA7-F7959634A348}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E59978E1-10C4-431B-9AA7-F7959634A348}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E59978E1-10C4-431B-9AA7-F7959634A348}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E59978E1-10C4-431B-9AA7-F7959634A348}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDFD52F7-FB7E-4AB8-AE53-AB2930627536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDFD52F7-FB7E-4AB8-AE53-AB2930627536}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDFD52F7-FB7E-4AB8-AE53-AB2930627536}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDFD52F7-FB7E-4AB8-AE53-AB2930627536}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44D6C9A7-E587-4A7E-9937-1799935F2C85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44D6C9A7-E587-4A7E-9937-1799935F2C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44D6C9A7-E587-4A7E-9937-1799935F2C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44D6C9A7-E587-4A7E-9937-1799935F2C85}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
