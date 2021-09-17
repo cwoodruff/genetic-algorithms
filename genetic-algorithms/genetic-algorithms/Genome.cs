@@ -30,7 +30,6 @@ namespace genetic_algorithms
 
         private void CreateGenes()
         {
-            // DateTime d = DateTime.UtcNow;
             for (int i = 0; i < Length; i++)
                 _mGenes[i] = _mRandom.NextDouble();
         }

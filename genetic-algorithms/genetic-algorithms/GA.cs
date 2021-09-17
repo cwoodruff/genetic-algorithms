@@ -88,9 +88,7 @@ namespace genetic_algorithms
             var first = 0;
             var last = PopulationSize - 1;
             var mid = last / 2;
-
-            //  ArrayList's BinarySearch is for exact values only
-            //  so do this by hand.
+            
             while (idx == -1 && first <= last)
             {
                 if (randomFitness < m_fitnessTable[mid])
@@ -147,9 +145,9 @@ namespace genetic_algorithms
             {
                 int pidx1 = RouletteSelection();
                 int pidx2 = RouletteSelection();
-                Genome parent1, parent2, child1, child2;
-                parent1 = m_thisGeneration[pidx1];
-                parent2 = m_thisGeneration[pidx2];
+                Genome child1, child2;
+                var parent1 = m_thisGeneration[pidx1];
+                var parent2 = m_thisGeneration[pidx2];
 
                 if (m_random.NextDouble() < CrossoverRate)
                 {
