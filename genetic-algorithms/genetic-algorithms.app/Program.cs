@@ -20,7 +20,7 @@ namespace genetic_algorithms.app
         
         public static void Main()
         {
-            GA ga = new GA(0.8,0.05,1000,20000,2);
+            GA ga = new GA(0.8,0.05,100,2000,2);
 		
             GA.FitnessFunction = theFitnessFunction;
             ga.Elitism = true;
