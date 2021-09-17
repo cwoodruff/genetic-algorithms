@@ -4,6 +4,7 @@ namespace genetic_algorithms.app
 {
     class Program
     {
+        //  optimal solution for this is (0.5,0.5)
         public static double theFitnessFunction(double[] values)
         {
             if (values.GetLength(0) != 2)
@@ -16,10 +17,10 @@ namespace genetic_algorithms.app
             double f1 = Math.Pow(15*x*y*(1-x)*(1-y)*Math.Sin(n*Math.PI*x)*Math.Sin(n*Math.PI*y),2);
             return f1;
         }
-
+        
         public static void Main()
         {
-            GA ga = new GA(0.8,0.05,100,2000,2);
+            GA ga = new GA(0.8,0.05,1000,20000,2);
 		
             GA.FitnessFunction = theFitnessFunction;
             ga.Elitism = true;
