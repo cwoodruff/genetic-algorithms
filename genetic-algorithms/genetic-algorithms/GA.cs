@@ -54,7 +54,7 @@ namespace genetic_algorithms
             m_thisGeneration = new List<Genome>(Generations);
             m_nextGeneration = new List<Genome>(Generations);
             Genome.MutationRate = MutationRate;
-            
+
             CreateGenomes();
             RankPopulation();
 
@@ -88,7 +88,7 @@ namespace genetic_algorithms
             var first = 0;
             var last = PopulationSize - 1;
             var mid = last / 2;
-            
+
             while (idx == -1 && first <= last)
             {
                 if (randomFitness < m_fitnessTable[mid])
@@ -104,6 +104,7 @@ namespace genetic_algorithms
                 if ((last - first) == 1)
                     idx = last;
             }
+
             return idx;
         }
 
@@ -121,7 +122,7 @@ namespace genetic_algorithms
             //  now sorted in order of fitness.
             double fitness = 0.0;
             m_fitnessTable.Clear();
-            
+
             foreach (var genome in m_thisGeneration)
             {
                 fitness += genome.Fitness;

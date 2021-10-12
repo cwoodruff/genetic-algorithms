@@ -14,14 +14,15 @@ namespace genetic_algorithms.app
             double y = values[1];
             double n = 9;
 
-            double f1 = Math.Pow(15*x*y*(1-x)*(1-y)*Math.Sin(n*Math.PI*x)*Math.Sin(n*Math.PI*y),2);
+            double f1 = Math.Pow(15 * x * y * (1 - x) * (1 - y) * Math.Sin(n * Math.PI * x) * Math.Sin(n * Math.PI * y),
+                2);
             return f1;
         }
-        
+
         public static void Main()
         {
-            GA ga = new GA(0.8,0.05,200,2500,2);
-		
+            GA ga = new GA(0.8, 0.05, 200, 2500, 2);
+
             GA.FitnessFunction = theFitnessFunction;
             ga.Elitism = true;
             ga.Go();
