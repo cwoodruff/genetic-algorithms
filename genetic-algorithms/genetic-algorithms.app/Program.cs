@@ -2,10 +2,10 @@
 
 namespace genetic_algorithms.app
 {
-    class Program
+    static class Program
     {
         //  optimal solution for this is (0.5,0.5)
-        public static double theFitnessFunction(double[] values)
+        private static double theFitnessFunction(double[] values)
         {
             if (values.GetLength(0) != 2)
                 throw new ArgumentOutOfRangeException($"should only have 2 args");
@@ -21,7 +21,7 @@ namespace genetic_algorithms.app
 
         public static void Main()
         {
-            GA ga = new GA(0.8, 0.05, 200, 2500, 2);
+            GA ga = new GA(0.8, 0.05, 1000, 2500, 2);
 
             GA.FitnessFunction = theFitnessFunction;
             ga.Elitism = true;

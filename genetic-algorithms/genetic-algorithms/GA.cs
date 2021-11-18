@@ -144,8 +144,8 @@ namespace genetic_algorithms
 
             for (var i = 0; i < PopulationSize; i += 2)
             {
-                int pidx1 = RouletteSelection();
-                int pidx2 = RouletteSelection();
+                var pidx1 = RouletteSelection();
+                var pidx2 = RouletteSelection();
                 Genome child1, child2;
                 var parent1 = m_thisGeneration[pidx1];
                 var parent2 = m_thisGeneration[pidx2];
@@ -180,22 +180,22 @@ namespace genetic_algorithms
         private List<Genome> m_nextGeneration;
         private List<double> m_fitnessTable;
 
-        static Random m_random = new Random();
+        static readonly Random m_random = new Random();
 
         public static GAFunction FitnessFunction { get; set; }
 
         //  Properties
-        public int PopulationSize { get; set; }
+        private int PopulationSize { get; set; }
 
-        public int Generations { get; set; }
+        private int Generations { get; set; }
 
-        public int GenomeSize { get; set; }
+        private int GenomeSize { get; set; }
 
-        public double CrossoverRate { get; set; }
+        private double CrossoverRate { get; set; }
 
-        public double MutationRate { get; set; }
+        private double MutationRate { get; set; }
 
-        public string FitnessFile { get; set; }
+        private string FitnessFile { get; set; }
 
         public bool Elitism { get; set; }
 
@@ -212,7 +212,7 @@ namespace genetic_algorithms
             GetNthGenome(0, out values, out fitness);
         }
 
-        public Genome GetNthGenome(int n, out double[] values, out double fitness)
+        private Genome GetNthGenome(int n, out double[] values, out double fitness)
         {
             if (n < 0 || n > PopulationSize - 1)
                 throw new ArgumentOutOfRangeException($"n too large, or too small");
