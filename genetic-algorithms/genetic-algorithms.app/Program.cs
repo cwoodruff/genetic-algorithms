@@ -25,7 +25,7 @@ namespace genetic_algorithms.app
 
             GA.FitnessFunction = MyFitnessFunction;
             ga.Elitism = true;
-            ga.Go();
+            ga.Live();
 
             ga.GetBest(out var values, out var fitness);
             Console.WriteLine("Best ({0}):", fitness);

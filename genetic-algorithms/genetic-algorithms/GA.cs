@@ -65,7 +65,7 @@ namespace genetic_algorithms
             Elitism = false;
         }
 
-        public void Go()
+        public void Live()
         {
             if (FitnessFunction == null)
                 throw new ArgumentNullException($"Need to supply fitness function");
