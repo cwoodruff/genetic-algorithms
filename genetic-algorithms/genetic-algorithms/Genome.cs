@@ -33,23 +33,23 @@ namespace genetic_algorithms
         {
             Length = genes.GetLength(0);
             _genes = new double[Length];
-            for (int i = 0; i < Length; i++)
+            for (var i = 0; i < Length; i++)
                 _genes[i] = genes[i];
         }
 
 
         private void CreateGenes()
         {
-            for (int i = 0; i < Length; i++)
+            for (var i = 0; i < Length; i++)
                 _genes[i] = _random.NextDouble();
         }
 
         public void Crossover(ref Genome genome2, out Genome child1, out Genome child2)
         {
-            int pos = (int)(_random.NextDouble() * Length);
+            var pos = (int)(_random.NextDouble() * Length);
             child1 = new Genome(Length, false);
             child2 = new Genome(Length, false);
-            for (int i = 0; i < Length; i++)
+            for (var i = 0; i < Length; i++)
             {
                 if (i < pos)
                 {
