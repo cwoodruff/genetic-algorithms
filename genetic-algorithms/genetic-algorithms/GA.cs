@@ -9,6 +9,29 @@ namespace genetic_algorithms
 
     public class GA
     {
+        private double _TotalFitness;
+
+        private List<Genome> _thisGeneration;
+        private List<Genome> _nextGeneration;
+        private List<double> _fitnessTable;
+
+        private static readonly Random _random = new Random();
+
+        public static GAFunction FitnessFunction { get; set; }
+        
+        private int PopulationSize { get; set; }
+
+        private int Generations { get; set; }
+
+        private int GenomeSize { get; set; }
+
+        private double CrossoverRate { get; set; }
+
+        private double MutationRate { get; set; }
+
+        private string FitnessFile { get; set; }
+
+        public bool Elitism { get; set; }
         public GA()
         {
             InitialValues();
@@ -50,9 +73,9 @@ namespace genetic_algorithms
                 throw new IndexOutOfRangeException("Genome size not set");
 
             //  Create the fitness table.
-            m_fitnessTable = new List<double>();
-            m_thisGeneration = new List<Genome>(Generations);
-            m_nextGeneration = new List<Genome>(Generations);
+            _fitnessTable = new List<double>();
+            _thisGeneration = new List<Genome>(Generations);
+            _nextGeneration = new List<Genome>(Generations);
             Genome.MutationRate = MutationRate;
 
             CreateGenomes();
@@ -72,7 +95,7 @@ namespace genetic_algorithms
                 RankPopulation();
                 if (write)
                 {
-                    double d = m_thisGeneration[PopulationSize - 1].Fitness;
+                    double d = _thisGeneration[PopulationSize - 1].Fitness;
                     outputFitness.WriteLine("{0},{1}", i, d);
                 }
             }
@@ -83,7 +106,7 @@ namespace genetic_algorithms
 
         private int RouletteSelection()
         {
-            double randomFitness = m_random.NextDouble() * m_totalFitness;
+            double randomFitness = _random.NextDouble() * _TotalFitness;
             var idx = -1;
             var first = 0;
             var last = PopulationSize - 1;
@@ -91,11 +114,11 @@ namespace genetic_algorithms
 
             while (idx == -1 && first <= last)
             {
-                if (randomFitness < m_fitnessTable[mid])
+                if (randomFitness < _fitnessTable[mid])
                 {
                     last = mid;
                 }
-                else if (randomFitness > m_fitnessTable[mid])
+                else if (randomFitness > _fitnessTable[mid])
                 {
                     first = mid;
                 }
@@ -110,47 +133,47 @@ namespace genetic_algorithms
 
         private void RankPopulation()
         {
-            m_totalFitness = 0;
-            foreach (var genome in m_thisGeneration)
+            _TotalFitness = 0;
+            foreach (var genome in _thisGeneration)
             {
                 genome.Fitness = FitnessFunction(genome.Genes());
-                m_totalFitness += genome.Fitness;
+                _TotalFitness += genome.Fitness;
             }
 
-            m_thisGeneration.Sort(new GenomeComparer());
+            _thisGeneration.Sort(new GenomeComparer());
 
             //  now sorted in order of fitness.
             double fitness = 0.0;
-            m_fitnessTable.Clear();
+            _fitnessTable.Clear();
 
-            foreach (var genome in m_thisGeneration)
+            foreach (var genome in _thisGeneration)
             {
                 fitness += genome.Fitness;
-                m_fitnessTable.Add(fitness);
+                _fitnessTable.Add(fitness);
             }
         }
 
         private void CreateGenomes()
         {
-            m_thisGeneration = Enumerable.Repeat(new Genome(GenomeSize), PopulationSize).ToList();
+            _thisGeneration = Enumerable.Repeat(new Genome(GenomeSize), PopulationSize).ToList();
         }
 
         private void CreateNextGeneration()
         {
-            m_nextGeneration.Clear();
+            _nextGeneration.Clear();
             Genome g = null;
             if (Elitism)
-                g = m_thisGeneration[PopulationSize - 1];
+                g = _thisGeneration[PopulationSize - 1];
 
             for (var i = 0; i < PopulationSize; i += 2)
             {
                 var pidx1 = RouletteSelection();
                 var pidx2 = RouletteSelection();
                 Genome child1, child2;
-                var parent1 = m_thisGeneration[pidx1];
-                var parent2 = m_thisGeneration[pidx2];
+                var parent1 = _thisGeneration[pidx1];
+                var parent2 = _thisGeneration[pidx2];
 
-                if (m_random.NextDouble() < CrossoverRate)
+                if (_random.NextDouble() < CrossoverRate)
                 {
                     parent1.Crossover(ref parent2, out child1, out child2);
                 }
@@ -163,45 +186,20 @@ namespace genetic_algorithms
                 child1.Mutate();
                 child2.Mutate();
 
-                m_nextGeneration.Add(child1);
-                m_nextGeneration.Add(child2);
+                _nextGeneration.Add(child1);
+                _nextGeneration.Add(child2);
             }
 
             if (Elitism && g != null)
-                m_nextGeneration[0] = g;
+                _nextGeneration[0] = g;
 
-            m_thisGeneration.Clear();
-            foreach (var genome in m_nextGeneration) m_thisGeneration.Add(genome);
+            _thisGeneration.Clear();
+            foreach (var genome in _nextGeneration) _thisGeneration.Add(genome);
         }
-
-        private double m_totalFitness;
-
-        private List<Genome> m_thisGeneration;
-        private List<Genome> m_nextGeneration;
-        private List<double> m_fitnessTable;
-
-        static readonly Random m_random = new Random();
-
-        public static GAFunction FitnessFunction { get; set; }
-
-        //  Properties
-        private int PopulationSize { get; set; }
-
-        private int Generations { get; set; }
-
-        private int GenomeSize { get; set; }
-
-        private double CrossoverRate { get; set; }
-
-        private double MutationRate { get; set; }
-
-        private string FitnessFile { get; set; }
-
-        public bool Elitism { get; set; }
 
         public void GetBest(out double[] values, out double fitness)
         {
-            Genome g = m_thisGeneration[PopulationSize - 1];
+            Genome g = _thisGeneration[PopulationSize - 1];
             values = new double[g.Length];
             g.GetValues(ref values);
             fitness = g.Fitness;
@@ -212,15 +210,14 @@ namespace genetic_algorithms
             GetNthGenome(0, out values, out fitness);
         }
 
-        private Genome GetNthGenome(int n, out double[] values, out double fitness)
+        private void GetNthGenome(int n, out double[] values, out double fitness)
         {
             if (n < 0 || n > PopulationSize - 1)
                 throw new ArgumentOutOfRangeException($"n too large, or too small");
-            Genome g = m_thisGeneration[n];
+            Genome g = _thisGeneration[n];
             values = new double[g.Length];
             g.GetValues(ref values);
             fitness = g.Fitness;
-            return g;
         }
     }
 }
