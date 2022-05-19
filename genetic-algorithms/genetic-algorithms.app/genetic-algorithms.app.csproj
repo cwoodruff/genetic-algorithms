@@ -2,12 +2,13 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>genetic_algorithms.app</RootNamespace>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\genetic-algorithms\genetic-algorithms.csproj"/>
+        <ProjectReference Include="..\genetic-algorithms\genetic-algorithms.csproj" />
     </ItemGroup>
 
 </Project>
