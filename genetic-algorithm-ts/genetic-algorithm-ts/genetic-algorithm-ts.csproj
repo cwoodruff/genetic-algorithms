@@ -1,8 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
         <RootNamespace>genetic_algorithm_ts</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
 </Project>
