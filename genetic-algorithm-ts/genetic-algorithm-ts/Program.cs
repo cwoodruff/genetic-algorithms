@@ -8,7 +8,7 @@ public abstract class Program
     {
         r = new Random();
         
-        Tour dest = Tour.random(Env.numCities);
+        Route dest = Route.random(Env.numCities);
         Population p = Population.randomized(dest, Env.popSize);
 
         int gen = 0;
@@ -32,8 +32,8 @@ public abstract class Program
 
     private static void display(Population p, int gen)
     {
-        Tour? best = p.findBest();
-        Console.WriteLine("Generation {0}\n" + "Best fitness:  {1}\n" + "Best distance: {2}\n", gen, best!.fitness, best.distance);
+        Route? best = p.findBest();
+        Console.WriteLine("Generation {0}\n" + "Best fitness:  {1}\n" + "Shortest route: {2}\n", gen, best!.fitness, best.distance);
     }
 }
 

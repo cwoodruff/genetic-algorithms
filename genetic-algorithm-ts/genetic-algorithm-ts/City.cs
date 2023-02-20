@@ -1,5 +1,6 @@
 ﻿namespace genetic_algorithm_ts;
 
+// This is a Gene in Genetic Algorithm terms
 public class City
 {
 

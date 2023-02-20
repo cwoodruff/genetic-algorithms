@@ -4,20 +4,20 @@ public class Population
 {
 
     // Member variables
-    private List<Tour?> p { get; set; }
+    private List<Route?> p { get; set; }
     public double maxFit { get; private set; }
 
     // ctor
-    private Population(List<Tour?> l)
+    private Population(List<Route?> l)
     {
         this.p = l;
         this.maxFit = this.calcMaxFit();
     }
 
     // Functionality
-    public static Population randomized(Tour t, int n)
+    public static Population randomized(Route t, int n)
     {
-        List<Tour?> tmp = new List<Tour?>();
+        List<Route?> tmp = new List<Route?>();
 
         for (int i = 0; i < n; ++i)
             tmp.Add( t.shuffle() );
@@ -30,24 +30,24 @@ public class Population
         return this.p.Max( t => t!.fitness );
     }
 
-    private Tour select()
+    private Route select()
     {
         while (true)
         {
             int i = Program.r!.Next(0, Env.popSize);
 
             if (Program.r.NextDouble() < this.p[i]!.fitness / this.maxFit)
-                return new Tour(this.p[i]!.t);
+                return new Route(this.p[i]!.t);
         }
     }
 
     private Population genNewPop(int n)
     {
-        List<Tour?> tours = new List<Tour?>();
+        List<Route?> tours = new List<Route?>();
 
         for (int i = 0; i < n; ++i)
         {
-            Tour t = this.select().crossover( this.select() );
+            Route t = this.select().crossover( this.select() );
 
             foreach (City unused in t.t)
                 t = t.mutate();
@@ -60,7 +60,7 @@ public class Population
 
     private Population elite(int n)
     {
-        List<Tour?> best = new List<Tour?>();
+        List<Route?> best = new List<Route?>();
         Population tmp = new Population(p);
 
         for (int i = 0; i < n; ++i)
@@ -72,9 +72,9 @@ public class Population
         return new Population(best);
     }
 
-    public Tour? findBest()
+    public Route? findBest()
     {
-        foreach (Tour? t in this.p)
+        foreach (Route? t in this.p)
         {
             double TOLERANCE = 0.000000001;
             if (Math.Abs(t!.fitness - this.maxFit) < TOLERANCE)

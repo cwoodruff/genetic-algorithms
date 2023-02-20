@@ -1,13 +1,14 @@
 ﻿namespace genetic_algorithm_ts;
 
-public class Tour
+// This is a Chromosome in Genetic Algorithm terms
+public class Route
 {
     public List<City> t { get; private set; }
     public double distance { get; private set; }
     public double fitness { get; private set; }
 
     // ctor
-    public Tour(List<City> l)
+    public Route(List<City> l)
     {
         this.t = l;
         this.distance = this.calcDist();
@@ -15,17 +16,17 @@ public class Tour
     }
 
     // Functionality
-    public static Tour random(int n)
+    public static Route random(int n)
     {
         List<City> t = new List<City>();
 
         for (int i = 0; i < n; ++i)
             t.Add( City.random() );
 
-        return new Tour(t);
+        return new Route(t);
     }
 
-    public Tour shuffle()
+    public Route shuffle()
     {
         List<City> tmp = new List<City>(this.t);
         int n = tmp.Count;
@@ -37,10 +38,10 @@ public class Tour
             (tmp[k], tmp[n]) = (tmp[n], tmp[k]);
         }
 
-        return new Tour(tmp);
+        return new Route(tmp);
     }
 
-    public Tour crossover(Tour m)
+    public Route crossover(Route m)
     {
         int i = Program.r!.Next(0, m.t.Count);
         int j = Program.r.Next(i, m.t.Count);
@@ -50,10 +51,10 @@ public class Tour
             .Concat(s)
             .Concat( ms.Skip(i) )
             .ToList();
-        return new Tour(c);
+        return new Route(c);
     }
 
-    public Tour mutate()
+    public Route mutate()
     {
         List<City> tmp = new List<City>(this.t);
 
@@ -64,7 +65,7 @@ public class Tour
             (tmp[i], tmp[j]) = (tmp[j], tmp[i]);
         }
 
-        return new Tour(tmp);
+        return new Route(tmp);
     }
 
     private double calcDist()
