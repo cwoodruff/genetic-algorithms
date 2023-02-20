@@ -34,7 +34,7 @@ public class Population
     {
         while (true)
         {
-            int i = Program.r!.Next(0, Env.popSize);
+            int i = Program.r!.Next(0, Env.PopSize);
 
             if (Program.r.NextDouble() < this.p[i]!.fitness / this.maxFit)
                 return new Route(this.p[i]!.t);
@@ -86,8 +86,8 @@ public class Population
 
     public Population evolve()
     {
-        Population best = this.elite(Env.elitism);
-        Population np = this.genNewPop(Env.popSize - Env.elitism);
+        Population best = this.elite(Env.Elitism);
+        Population np = this.genNewPop(Env.PopSize - Env.Elitism);
         return new Population( best.p.Concat(np.p).ToList() );
     }
 }

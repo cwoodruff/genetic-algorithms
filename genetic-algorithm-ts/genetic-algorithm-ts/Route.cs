@@ -58,7 +58,7 @@ public class Route
     {
         List<City> tmp = new List<City>(this.t);
 
-        if (Program.r != null && Program.r.NextDouble() < Env.mutRate)
+        if (Program.r != null && Program.r.NextDouble() < Env.MutRate)
         {
             int i = Program.r.Next(0, this.t.Count);
             int j = Program.r.Next(0, this.t.Count);

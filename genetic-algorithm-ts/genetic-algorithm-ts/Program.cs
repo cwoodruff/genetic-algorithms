@@ -8,13 +8,13 @@ public abstract class Program
     {
         r = new Random();
         
-        Route dest = Route.random(Env.numCities);
-        Population p = Population.randomized(dest, Env.popSize);
+        Route dest = Route.random(Env.NumCities);
+        Population p = Population.randomized(dest, Env.PopSize);
 
         int gen = 0;
         bool better = true;
 
-        while (gen < Env.maxGen)
+        while (gen < Env.MaxGen)
         {
             if (better)
                 display(p, gen);
@@ -37,11 +37,11 @@ public abstract class Program
     }
 }
 
-public static class Env
+public abstract record Env
 {
-    public const double mutRate = 0.03;
-    public const int elitism = 6;
-    public const int popSize = 90;
-    public const int numCities = 120;
-    public const int maxGen = 10000;
+    public const double MutRate = 0.03;
+    public const int Elitism = 6;
+    public const int PopSize = 90;
+    public const int NumCities = 120;
+    public const int MaxGen = 10000;
 }
