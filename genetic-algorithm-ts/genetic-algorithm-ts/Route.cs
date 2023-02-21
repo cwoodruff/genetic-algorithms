@@ -11,8 +11,8 @@ public class Route
     public Route(List<City> l)
     {
         this.t = l;
-        this.distance = this.calcDist();
-        this.fitness = this.calcFit();
+        this.distance = this.CalcDist();
+        this.fitness = this.CalcFit();
     }
 
     // Functionality
@@ -21,12 +21,12 @@ public class Route
         List<City> t = new List<City>();
 
         for (int i = 0; i < n; ++i)
-            t.Add(City.random());
+            t.Add(City.Random());
 
         return new Route(t);
     }
 
-    public Route shuffle()
+    public Route Shuffle()
     {
         List<City> tmp = new List<City>(this.t);
         int n = tmp.Count;
@@ -41,7 +41,7 @@ public class Route
         return new Route(tmp);
     }
 
-    public Route crossover(Route m)
+    public Route Crossover(Route m)
     {
         int i = Program.rdm!.Next(0, m.t.Count);
         int j = Program.rdm.Next(i, m.t.Count);
@@ -54,7 +54,7 @@ public class Route
         return new Route(c);
     }
 
-    public Route mutate()
+    public Route Mutate()
     {
         List<City> tmp = new List<City>(this.t);
 
@@ -68,16 +68,16 @@ public class Route
         return new Route(tmp);
     }
 
-    private double calcDist()
+    private double CalcDist()
     {
         double total = 0;
         for (int i = 0; i < this.t.Count; ++i)
-            total += this.t[i].distanceTo(this.t[(i + 1) % this.t.Count]);
+            total += this.t[i].DistanceTo(this.t[(i + 1) % this.t.Count]);
 
         return total;
     }
 
-    private double calcFit()
+    private double CalcFit()
     {
         return 1 / this.distance;
     }

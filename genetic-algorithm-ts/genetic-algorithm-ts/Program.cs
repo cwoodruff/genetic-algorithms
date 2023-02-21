@@ -9,7 +9,7 @@ public abstract class Program
         rdm = new Random();
 
         Route dest = Route.random(Env.NumCities);
-        Population p = Population.randomized(dest, Env.PopSize);
+        Population p = Population.Randomized(dest, Env.PopSize);
 
         int gen = 0;
         bool better = true;
@@ -17,12 +17,12 @@ public abstract class Program
         while (gen < Env.MaxGen)
         {
             if (better)
-                display(p, gen);
+                Display(p, gen);
 
             better = false;
             double oldFit = p.maxFit;
 
-            p = p.evolve();
+            p = p.Evolve();
             if (p.maxFit > oldFit)
                 better = true;
 
@@ -30,9 +30,9 @@ public abstract class Program
         }
     }
 
-    private static void display(Population p, int gen)
+    private static void Display(Population p, int gen)
     {
-        Route? best = p.findBest();
+        Route? best = p.FindBest();
         Console.WriteLine("Generation {0}\n" + "Best fitness:  {1}\n" + "Shortest route: {2}\n", gen, best!.fitness,
             best.distance);
     }

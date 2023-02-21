@@ -15,12 +15,12 @@ public class City
     }
 
     // Functionality
-    public double distanceTo(City c)
+    public double DistanceTo(City c)
     {
         return Math.Sqrt(Math.Pow((c.x - this.x), 2) + Math.Pow((c.y - this.y), 2));
     }
 
-    public static City random()
+    public static City Random()
     {
         return new City(Program.rdm!.NextDouble(), Program.rdm.NextDouble());
     }
