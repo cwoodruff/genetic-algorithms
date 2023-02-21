@@ -2,7 +2,6 @@
 
 public class Population
 {
-
     // Member variables
     private List<Route?> p { get; set; }
     public double maxFit { get; private set; }
@@ -20,14 +19,14 @@ public class Population
         List<Route?> tmp = new List<Route?>();
 
         for (int i = 0; i < n; ++i)
-            tmp.Add( t.shuffle() );
+            tmp.Add(t.shuffle());
 
         return new Population(tmp);
     }
 
     private double calcMaxFit()
     {
-        return this.p.Max( t => t!.fitness );
+        return this.p.Max(t => t!.fitness);
     }
 
     private Route select()
@@ -47,7 +46,7 @@ public class Population
 
         for (int i = 0; i < n; ++i)
         {
-            Route t = this.select().crossover( this.select() );
+            Route t = this.select().crossover(this.select());
 
             foreach (City unused in t.t)
                 t = t.mutate();
@@ -65,8 +64,8 @@ public class Population
 
         for (int i = 0; i < n; ++i)
         {
-            best.Add( tmp.findBest() );
-            tmp = new Population( tmp.p.Except(best).ToList() );
+            best.Add(tmp.findBest());
+            tmp = new Population(tmp.p.Except(best).ToList());
         }
 
         return new Population(best);
@@ -80,7 +79,7 @@ public class Population
             if (Math.Abs(t!.fitness - this.maxFit) < TOLERANCE)
                 return t;
         }
-        
+
         return null;
     }
 
@@ -88,6 +87,6 @@ public class Population
     {
         Population best = this.elite(Env.Elitism);
         Population np = this.genNewPop(Env.PopSize - Env.Elitism);
-        return new Population( best.p.Concat(np.p).ToList() );
+        return new Population(best.p.Concat(np.p).ToList());
     }
 }

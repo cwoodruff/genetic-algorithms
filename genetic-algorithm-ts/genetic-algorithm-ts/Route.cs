@@ -21,7 +21,7 @@ public class Route
         List<City> t = new List<City>();
 
         for (int i = 0; i < n; ++i)
-            t.Add( City.random() );
+            t.Add(City.random());
 
         return new Route(t);
     }
@@ -49,7 +49,7 @@ public class Route
         List<City> ms = m.t.Except(s).ToList();
         List<City> c = ms.Take(i)
             .Concat(s)
-            .Concat( ms.Skip(i) )
+            .Concat(ms.Skip(i))
             .ToList();
         return new Route(c);
     }
@@ -72,7 +72,7 @@ public class Route
     {
         double total = 0;
         for (int i = 0; i < this.t.Count; ++i)
-            total += this.t[i].distanceTo( this.t[ (i + 1) % this.t.Count ] );
+            total += this.t[i].distanceTo(this.t[(i + 1) % this.t.Count]);
 
         return total;
     }
@@ -81,5 +81,4 @@ public class Route
     {
         return 1 / this.distance;
     }
-
 }

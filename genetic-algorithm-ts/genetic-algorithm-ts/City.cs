@@ -3,7 +3,6 @@
 // This is a Gene in Genetic Algorithm terms
 public class City
 {
-
     // Member variables
     private double x { get; set; }
     private double y { get; set; }
@@ -23,6 +22,6 @@ public class City
 
     public static City random()
     {
-        return new City( Program.rdm!.NextDouble(), Program.rdm.NextDouble() );
+        return new City(Program.rdm!.NextDouble(), Program.rdm.NextDouble());
     }
 }
