@@ -34,7 +34,7 @@ public class Route
         while (n > 1)
         {
             n--;
-            int k = Program.r!.Next(n + 1);
+            int k = Program.rdm!.Next(n + 1);
             (tmp[k], tmp[n]) = (tmp[n], tmp[k]);
         }
 
@@ -43,8 +43,8 @@ public class Route
 
     public Route crossover(Route m)
     {
-        int i = Program.r!.Next(0, m.t.Count);
-        int j = Program.r.Next(i, m.t.Count);
+        int i = Program.rdm!.Next(0, m.t.Count);
+        int j = Program.rdm.Next(i, m.t.Count);
         List<City> s = this.t.GetRange(i, j - i + 1);
         List<City> ms = m.t.Except(s).ToList();
         List<City> c = ms.Take(i)
@@ -58,10 +58,10 @@ public class Route
     {
         List<City> tmp = new List<City>(this.t);
 
-        if (Program.r != null && Program.r.NextDouble() < Env.MutRate)
+        if (Program.rdm != null && Program.rdm.NextDouble() < Env.MutRate)
         {
-            int i = Program.r.Next(0, this.t.Count);
-            int j = Program.r.Next(0, this.t.Count);
+            int i = Program.rdm.Next(0, this.t.Count);
+            int j = Program.rdm.Next(0, this.t.Count);
             (tmp[i], tmp[j]) = (tmp[j], tmp[i]);
         }
 

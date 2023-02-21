@@ -34,9 +34,9 @@ public class Population
     {
         while (true)
         {
-            int i = Program.r!.Next(0, Env.PopSize);
+            int i = Program.rdm!.Next(0, Env.PopSize);
 
-            if (Program.r.NextDouble() < this.p[i]!.fitness / this.maxFit)
+            if (Program.rdm.NextDouble() < this.p[i]!.fitness / this.maxFit)
                 return new Route(this.p[i]!.t);
         }
     }

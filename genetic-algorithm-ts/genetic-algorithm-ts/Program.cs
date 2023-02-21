@@ -2,11 +2,11 @@
 
 public abstract class Program
 {
-    public static Random? r { get; private set; }
+    public static Random? rdm { get; private set; }
 
     public static void Main()
     {
-        r = new Random();
+        rdm = new Random();
         
         Route dest = Route.random(Env.NumCities);
         Population p = Population.randomized(dest, Env.PopSize);
@@ -39,9 +39,9 @@ public abstract class Program
 
 public abstract record Env
 {
-    public const double MutRate = 0.03;
-    public const int Elitism = 6;
-    public const int PopSize = 90;
-    public const int NumCities = 120;
+    public const double MutRate = 0.04;
+    public const int Elitism = 5;
+    public const int PopSize = 100;
+    public const int NumCities = 500;
     public const int MaxGen = 10000;
 }

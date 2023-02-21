@@ -23,6 +23,6 @@ public class City
 
     public static City random()
     {
-        return new City( Program.r!.NextDouble(), Program.r.NextDouble() );
+        return new City( Program.rdm!.NextDouble(), Program.rdm.NextDouble() );
     }
 }
