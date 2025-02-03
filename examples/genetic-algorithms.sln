@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "traveling-salesman-GA", "traveling-salesman-GA\traveling-salesman-GA.csproj", "{37ED374B-E504-47D1-AC30-9D182B3884BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "portfolio-optimization-GA", "portfolio-optimization-GA\portfolio-optimization-GA.csproj", "{D280FA4E-A267-4340-BF96-20B648B81458}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "engineering-design-GA", "engineering-design-GA\engineering-design-GA.csproj", "{0A3C3F71-0CD1-40FA-82A6-CB0CB14A6F43}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37ED374B-E504-47D1-AC30-9D182B3884BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37ED374B-E504-47D1-AC30-9D182B3884BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37ED374B-E504-47D1-AC30-9D182B3884BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37ED374B-E504-47D1-AC30-9D182B3884BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D280FA4E-A267-4340-BF96-20B648B81458}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D280FA4E-A267-4340-BF96-20B648B81458}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D280FA4E-A267-4340-BF96-20B648B81458}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D280FA4E-A267-4340-BF96-20B648B81458}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A3C3F71-0CD1-40FA-82A6-CB0CB14A6F43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A3C3F71-0CD1-40FA-82A6-CB0CB14A6F43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A3C3F71-0CD1-40FA-82A6-CB0CB14A6F43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A3C3F71-0CD1-40FA-82A6-CB0CB14A6F43}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
