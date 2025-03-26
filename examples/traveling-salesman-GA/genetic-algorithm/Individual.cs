@@ -4,15 +4,10 @@ namespace traveling_salesman_GA.genetic_algorithm;
 /// Represents an individual solution in the TSP genetic algorithm.
 /// The chromosome is an array of integers representing a permutation of city indices.
 /// </summary>
-public class Individual
+public class Individual(int chromosomeLength)
 {
-    public int[] Chromosome { get; set; }
+    public int[] Chromosome { get; set; } = new int[chromosomeLength];
     public double Fitness { get; set; }
-
-    public Individual(int chromosomeLength)
-    {
-        Chromosome = new int[chromosomeLength];
-    }
 
     /// <summary>
     /// Creates a deep copy of the individual.

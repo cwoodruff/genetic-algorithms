@@ -7,10 +7,9 @@ namespace engineering_design_GA.fitness_function;
 ///   Fitness = sum(BenefitCoefficients[i] * x[i]) - PenaltyCoefficient * sum(x[i]^2)
 /// Higher fitness values represent better designs.
 /// </summary>
-public class EngineeringDesignFitnessFunction : BaseFitnessFunction<double[], EngineeringDesignFitnessConfiguration>
+public class EngineeringDesignFitnessFunction(EngineeringDesignFitnessConfiguration config)
+    : BaseFitnessFunction<double[], EngineeringDesignFitnessConfiguration>(config)
 {
-    public EngineeringDesignFitnessFunction(EngineeringDesignFitnessConfiguration config) : base(config) { }
-
     public override double Evaluate(double[] chromosome)
     {
         double benefit = 0.0;

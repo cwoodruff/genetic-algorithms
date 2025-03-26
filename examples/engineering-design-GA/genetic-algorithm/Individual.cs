@@ -4,15 +4,10 @@ namespace engineering_design_GA.genetic_algorithm;
 /// Represents an individual solution in the GA.
 /// For engineering design optimization, the chromosome is an array of doubles.
 /// </summary>
-public class Individual
+public class Individual(int chromosomeLength)
 {
-    public double[] Chromosome { get; set; }
+    public double[] Chromosome { get; set; } = new double[chromosomeLength];
     public double Fitness { get; set; }
-
-    public Individual(int chromosomeLength)
-    {
-        Chromosome = new double[chromosomeLength];
-    }
 
     /// <summary>
     /// Creates a deep copy of this individual.

@@ -6,42 +6,28 @@ namespace engineering_design_GA.genetic_algorithm;
     /// A genetic algorithm implementation that is agnostic of the problem domain.
     /// It works with any fitness function (provided via DI) that evaluates a chromosome of type double[].
     /// </summary>
-    public class GeneticAlgorithm
+    public class GeneticAlgorithm(
+        int populationSize,
+        int chromosomeLength,
+        double mutationRate,
+        double crossoverRate,
+        int tournamentSize,
+        int maxGenerations,
+        IFitnessFunction<double[]> fitnessFunction)
     {
         // GA parameters.
-        public int PopulationSize { get; set; }
-        public int ChromosomeLength { get; set; }
-        public double MutationRate { get; set; }
-        public double CrossoverRate { get; set; }
-        public int TournamentSize { get; set; }
-        public int MaxGenerations { get; set; }
+        public int PopulationSize { get; set; } = populationSize;
+        public int ChromosomeLength { get; set; } = chromosomeLength;
+        public double MutationRate { get; set; } = mutationRate;
+        public double CrossoverRate { get; set; } = crossoverRate;
+        public int TournamentSize { get; set; } = tournamentSize;
+        public int MaxGenerations { get; set; } = maxGenerations;
 
         // The injected fitness function.
-        private readonly IFitnessFunction<double[]> _fitnessFunction;
 
-        public List<Individual> Population { get; set; }
+        public List<Individual> Population { get; set; } = new(populationSize);
         public Individual BestIndividual { get; set; }
-        public Random Rand { get; set; }
-
-        public GeneticAlgorithm(
-            int populationSize,
-            int chromosomeLength,
-            double mutationRate,
-            double crossoverRate,
-            int tournamentSize,
-            int maxGenerations,
-            IFitnessFunction<double[]> fitnessFunction)
-        {
-            PopulationSize = populationSize;
-            ChromosomeLength = chromosomeLength;
-            MutationRate = mutationRate;
-            CrossoverRate = crossoverRate;
-            TournamentSize = tournamentSize;
-            MaxGenerations = maxGenerations;
-            _fitnessFunction = fitnessFunction;
-            Population = new List<Individual>(populationSize);
-            Rand = new Random();
-        }
+        public Random Rand { get; set; } = new();
 
         /// <summary>
         /// Initializes the population with random design parameters.
@@ -57,7 +43,7 @@ namespace engineering_design_GA.genetic_algorithm;
                 {
                     individual.Chromosome[j] = Rand.NextDouble() * 10;
                 }
-                individual.Fitness = _fitnessFunction.Evaluate(individual.Chromosome);
+                individual.Fitness = fitnessFunction.Evaluate(individual.Chromosome);
                 Population.Add(individual);
             }
             BestIndividual = GetBestIndividual();
@@ -155,8 +141,8 @@ namespace engineering_design_GA.genetic_algorithm;
                     Mutate(child1);
                     Mutate(child2);
 
-                    child1.Fitness = _fitnessFunction.Evaluate(child1.Chromosome);
-                    child2.Fitness = _fitnessFunction.Evaluate(child2.Chromosome);
+                    child1.Fitness = fitnessFunction.Evaluate(child1.Chromosome);
+                    child2.Fitness = fitnessFunction.Evaluate(child2.Chromosome);
 
                     newPopulation.Add(child1);
                     if (newPopulation.Count < PopulationSize)

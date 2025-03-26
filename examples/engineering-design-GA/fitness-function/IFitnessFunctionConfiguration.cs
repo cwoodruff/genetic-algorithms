@@ -10,15 +10,10 @@ public interface IFitnessFunctionConfiguration { }
 /// </summary>
 /// <typeparam name="T">The chromosome type.</typeparam>
 /// <typeparam name="TConfig">The type of configuration data (must implement IFitnessFunctionConfiguration).</typeparam>
-public abstract class BaseFitnessFunction<T, TConfig> : IFitnessFunction<T>
+public abstract class BaseFitnessFunction<T, TConfig>(TConfig config) : IFitnessFunction<T>
     where TConfig : IFitnessFunctionConfiguration
 {
-    protected readonly TConfig Config;
-
-    public BaseFitnessFunction(TConfig config)
-    {
-        Config = config;
-    }
+    protected readonly TConfig Config = config;
 
     public abstract double Evaluate(T chromosome);
 }
