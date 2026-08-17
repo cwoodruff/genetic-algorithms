@@ -24,7 +24,7 @@ Genetic algorithms take a different path: they borrow Darwin's ideas of natural 
 
 ```
 Create Population → Evaluate Fitness → Selection → Crossover → Mutation → New Generation
-        ↑                                                                      │
+        ↑                                                                     │
         └────────────────────── repeat until converged ───────────────────────┘
 ```
 
