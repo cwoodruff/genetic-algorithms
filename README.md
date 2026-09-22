@@ -4,7 +4,7 @@
 
 ***Evolve Your C# Code with AI: A 5-Week Genetic Algorithms Bootcamp for Developers***
 
-[Link to 5-week Blog Series]([https://github.com/giacomelli/GeneticSharp](https://woodruff.dev/evolve-your-c-code-with-ai-a-5-week-genetic-algorithms-bootcamp-for-developers/))
+[Link to 5-week Blog Series](https://woodruff.dev/evolve-your-c-code-with-ai-a-5-week-genetic-algorithms-bootcamp-for-developers/)
 
 This repository contains the slides, sample code, and supporting material for my conference talk *"Genetic Algorithms: Another AI Path"* — a practical introduction to evolutionary computing for .NET developers, software architects, and anyone curious about the branches of AI that don't involve a large language model.
 
